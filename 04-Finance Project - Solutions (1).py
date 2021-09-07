@@ -1,26 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
+____# We'll focus on bank stocks and see how they progressed throughout the [financial crisis](https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%9308) all the way to early 2016.
 
-# ___
-# 
-# <a href='http://www.pieriandata.com'> <img src='../Pierian_Data_Logo.png' /></a>
-# ___
-
-# # Finance Data Project - Solutions
-# 
-# In this data project we will focus on exploratory data analysis of stock prices. Keep in mind, this project is just meant to practice your visualization and pandas skills, it is not meant to be a robust financial analysis or be taken as financial advice.
-# ____
-# ** NOTE: This project is extremely challenging because it will introduce a lot of new concepts and have you looking things up on your own (we'll point you in the right direction) to try to solve the tasks issued. Feel free to just go through the solutions lecture notebook and video as a "walkthrough" project if you don't want to have to look things up yourself. You'll still learn a lot that way! **
-# ____
-# We'll focus on bank stocks and see how they progressed throughout the [financial crisis](https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%9308) all the way to early 2016.
-
-# ## Get the Data
-# 
-# In this section we will learn how to use pandas to directly read data from Google finance using pandas!
-# 
+# ## Get the Data 
 # First we need to start with the proper imports, which we've already laid out for you here.
-# 
-# *Note: [You'll need to install pandas-datareader for this to work!](https://github.com/pydata/pandas-datareader) Pandas datareader allows you to [read stock information directly from the internet](http://pandas.pydata.org/pandas-docs/stable/remote_data.html) Use these links for install guidance (**pip install pandas-datareader**), or just follow along with the video lecture.*
 # 
 # ### The Imports
 # 
@@ -37,7 +18,6 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # ## Data
-# 
 # We need to get data using pandas datareader. We will get stock information for the following banks:
 # *  Bank of America
 # * CitiGroup
@@ -56,7 +36,6 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 #     # Bank of America
 #     BAC = data.DataReader("BAC", 'google', start, end)
 # 
-# ### WARNING: MAKE SURE TO CHECK THE LINK ABOVE FOR THE LATEST WORKING API. "google" MAY NOT ALWAYS WORK.
 
 # In[2]:
 
@@ -128,8 +107,7 @@ bank_stocks.head()
 
 # # EDA
 # 
-# Let's explore the data a bit! Before continuing, I encourage you to check out the documentation on [Multi-Level Indexing](http://pandas.pydata.org/pandas-docs/stable/advanced.html) and [Using .xs](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html).
-# Reference the solutions if you can not figure out how to use .xs(), since that will be a major part of this project.
+# Let's explore the data a bit!
 # 
 # ** What is the max Close price for each bank's stock throughout the time period?**
 
@@ -149,7 +127,7 @@ bank_stocks.xs(key='Close',axis=1,level='Stock Info').max()
 returns = pd.DataFrame()
 
 
-# ** We can use pandas pct_change() method on the Close column to create a column representing this return value. Create a for loop that goes and for each Bank Stock Ticker creates this returns column and set's it as a column in the returns DataFrame.**
+# ** Use pandas pct_change() method on the Close column to create a column representing this return value. Create a for loop that goes and for each Bank Stock Ticker creates this returns column and set's it as a column in the returns DataFrame.**
 
 # In[11]:
 
@@ -171,9 +149,7 @@ sns.pairplot(returns[1:])
 
 # Background on [Citigroup's Stock Crash available here.](https://en.wikipedia.org/wiki/Citigroup#November_2008.2C_Collapse_.26_US_Government_Intervention_.28part_of_the_Global_Financial_Crisis.29) 
 # 
-# You'll also see the enormous crash in value if you take a look a the stock price plot (which we do later in the visualizations.)
-
-# ** Using this returns DataFrame, figure out on what dates each bank stock had the best and worst single day returns. You should notice that 4 of the banks share the same day for the worst drop, did anything significant happen that day?**
+# We'll see the enormous crash in value if you take a look a the stock price plot (which we do later in the visualizations.)
 
 # In[14]:
 
@@ -182,7 +158,7 @@ sns.pairplot(returns[1:])
 returns.idxmin()
 
 
-# ** You should have noticed that Citigroup's largest drop and biggest gain were very close to one another, did anythign significant happen in that time frame? **
+# ** Noticed that Citigroup's largest drop and biggest gain were very close to one another, did anythign significant happen in that time frame? **
 
 # [Citigroup had a stock split.](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=citigroup+stock+2011+may)
 
@@ -226,9 +202,7 @@ sns.distplot(returns.ix['2008-01-01':'2008-12-31']['C Return'],color='red',bins=
 
 # ____
 # # More Visualization
-# 
-# A lot of this project will focus on visualizations. Feel free to use any of your preferred visualization libraries to try to recreate the described plots below, seaborn, matplotlib, plotly and cufflinks, or just pandas.
-# 
+
 # ### Imports
 
 # In[20]:
@@ -245,7 +219,7 @@ import cufflinks as cf
 cf.go_offline()
 
 
-# ** Create a line plot showing Close price for each bank for the entire index of time. (Hint: Try using a for loop, or use [.xs](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html) to get a cross section of the data.)**
+# ** Create a line plot showing Close price for each bank for the entire index of time. (Using a for loop, or use [.xs](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.xs.html) to get a cross section of the data.)**
 
 # In[21]:
 
@@ -308,8 +282,7 @@ close_corr.iplot(kind='heatmap',colorscale='rdylbu')
 
 # # Part 2 (Optional)
 # 
-# In this second part of the project we will rely on the cufflinks library to create some Technical Analysis plots. This part of the project is experimental due to its heavy reliance on the cuffinks project, so feel free to skip it if any functionality is broken in the future.
-
+# In this second part of the project we will rely on the cufflinks library to create some Technical Analysis plots.
 # ** Use .iplot(kind='candle) to create a candle plot of Bank of America's stock from Jan 1st 2015 to Jan 1st 2016.**
 
 # In[28]:
@@ -332,8 +305,3 @@ MS['Close'].ix['2015-01-01':'2016-01-01'].ta_plot(study='sma',periods=[13,21,55]
 
 
 BAC['Close'].ix['2015-01-01':'2016-01-01'].ta_plot(study='boll')
-
-
-# # Great Job!
-# 
-# Definitely a lot of more specific finance topics here, so don't worry if you didn't understand them all! The only thing you should be concerned with understanding are the basic pandas and visualization oeprations.
